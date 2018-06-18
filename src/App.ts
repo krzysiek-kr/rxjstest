@@ -5,6 +5,5 @@ export class App {
         data$.subscribe((v) => {
             console.log(v);
         });
-        
     }
 }
