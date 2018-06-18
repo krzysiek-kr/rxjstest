@@ -1,0 +1,19 @@
+{
+  "name": "rxjstest",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "repository": "https://github.com/krzysiek-kr/rxjstest.git",
+  "author": "Krzysztof Krupa <krzysztof.krupa@sap.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "start": "tsc -w"
+  },
+  "private": true,
+  "dependencies": {
+    "rxjs": "^6.2.1",
+    "rxjs-tslint": "^0.1.4",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
+  }
+}
