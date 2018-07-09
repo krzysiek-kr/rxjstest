@@ -1,9 +1,10 @@
-import { from } from 'rxjs';
+import { Cached } from 'cache/cached';
+import { CachedObserver } from 'cache/cached-observer';
 export class App {
   run() {
-    const data$ = from(['d', 'd', 'e', 'x', 'z', 'e']);
-    data$.subscribe((v) => {
-      console.log(v);
-    });
+    Cached.init();
+    const observer1 = new CachedObserver('A');
+    let observer2 = new CachedObserver('B');
+    observer2 = new CachedObserver('C');
   }
 }
