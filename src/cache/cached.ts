@@ -12,9 +12,9 @@ export class Cached {
     const observable$ = new Observable<number>((subscriber) => {
       subscriber.next(0);
       subscriber.next(1);
-      setTimeout(() => {
+      /* setTimeout(() => {
         subscriber.next(2);
-      }, 1000);
+      }, 1000); */
     });
     // this.cached$ = observable$;
     this.cached$ = observable$.pipe(
