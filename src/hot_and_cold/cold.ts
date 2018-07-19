@@ -1,6 +1,5 @@
-import { Observable, interval, ConnectableObservable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { publish } from 'rxjs/internal/operators/publish';
-import { refCount } from 'rxjs/internal/operators/refCount';
 
 export class Cold {
   constructor() {
@@ -62,3 +61,25 @@ export class Cold {
     console.log(`Clearly, we can see that the subscribers are not starting over at 0.`);
   }
 }
+
+/*
+As we’ve seen the question whether an Observable is hot or cold is everything but black and white.
+In fact there are several strategies how values may be pushed to subscribers that we didn’t even touch on yet.
+In general we can say that we should be dealing with a hot Observable whenever we subscribe to something that
+is generating values no matter if someone is listening or not. When we subscribe to such a hot Observable,
+we don’t see past values but only new ones that were generated after our subscription.
+
+A typical example of a hot observable are mousemove events. The mouse moves happen regardless if
+someone is listening or not. When we start listening for them, we only get future events.
+
+Cold Observables on the other hand are the lazy ones. They only start producing values when someone subscribes.
+But then again, it’s really not a black and white thing.
+An iced cold Observable starts reproducing the values it emits independently with every new subscriber
+as we’ve seen in the examples above. But how should we call an Observable that only starts generating
+values as the first subscriber subscribes and then shares and reemits the exact same values to every
+new subscriber? Things get blurry and categorizing only by cold and hot doesn’t really cut it for every possible use case.
+
+As a rule of thumb, when you have a cold Observable and you want multiple subscribers to it,
+and you don’t want them to cause regenerating the values but rather reusing existing values, you need to start
+thinking about publish and friends.
+*/
