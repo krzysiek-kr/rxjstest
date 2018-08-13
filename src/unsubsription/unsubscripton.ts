@@ -9,7 +9,7 @@ export class Unsubscription {
   // uncomment method to show differences between different ways of unsubscription
   // from infinite source of observable
   constructor() {
-    // this.infinite1();
+  //   this.infinite1();
     this.infinite2();
   }
 
