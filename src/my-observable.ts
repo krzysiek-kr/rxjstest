@@ -1,42 +1,36 @@
-import { Observable, combineLatest, forkJoin } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map, catchError} from 'rxjs/operators';
 
 export class MyObservable {
 
-  static observable1$: Observable<number>;
-  static observable2$: Observable<number>;
+  static observable$: Observable<number>;
 
   constructor() {
   }
 
   static init1() {
-    this.observable1$ = new Observable<number>((observer) => {
+    this.observable$ = new Observable<number>((observer) => {
       observer.next(1);
       observer.next(2);
       observer.next(3);
       observer.next(4);
-      setTimeout(() => {
-        observer.next(5);
-        observer.complete();
-      }, 1000);
+      observer.next(5);
     });
   }
-  static init2() {
-    this.observable2$ = new Observable<number>((observer) => {
-      observer.next(10);
-      observer.next(20);
-      observer.next(30);
-      setTimeout(() => {
-        observer.next(40);
-      }, 200);
-      setTimeout(() => {
-        observer.next(50);
-        observer.complete();
-      }, 300);
+  static catchErrors1() {
+    const mapOperation = map((value: number) => {
+      if (value % 2) {
+        throw new Error();
+      } else {
+        return value;
+      }
     });
-  }
-  static combine() {
-    const combined$ = combineLatest(this.observable1$, this.observable2$, (x, y) => x + y);
-    combined$.subscribe(
+    const catchOperation = catchError((error) => {
+      console.log(error);
+      return of(100);
+    });
+
+    this.observable$.pipe(mapOperation, catchOperation).subscribe(
       {
         next: x => console.log('got value ' + x),
         error: err => console.error('something wrong occurred: ' + err),
@@ -45,9 +39,22 @@ export class MyObservable {
     );
   }
 
-  static forkJoin() {
-    const forkJoined$ = forkJoin(this.observable1$, this.observable2$, (x, y) => x + y);
-    forkJoined$.subscribe(
+  static init2() {
+    this.observable$ = new Observable<number>((observer) => {
+      observer.next(1);
+      observer.next(2);
+      observer.next(3);
+      observer.next(4);
+      observer.error(5);
+    });
+  }
+  static catchErrors2() {
+    const catchOperation = catchError((error) => {
+      console.log(error);
+      return of(100);
+    });
+
+    this.observable$.pipe(catchOperation).subscribe(
       {
         next: x => console.log('got value ' + x),
         error: err => console.error('something wrong occurred: ' + err),
