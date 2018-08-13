@@ -1,5 +1,4 @@
-import { from, Subject, ConnectableObservable } from 'rxjs';
-import { multicast } from 'rxjs/operators';
+import { ConnectableObservable, BehaviorSubject, ReplaySubject, AsyncSubject } from 'rxjs';
 
 export class MyObservable {
 
@@ -8,31 +7,65 @@ export class MyObservable {
   constructor() {
   }
 
-  static init() {
-    const source$ = from([1, 2, 3]);
-    const subject$ = new Subject();
-    this.multicasted$ = source$.pipe(multicast(subject$)) as ConnectableObservable<any>;
+  static initBehaviorSubject() {
+    const subject = new BehaviorSubject(0);
+
+    subject.subscribe({
+      next: (v) => console.log('observerA: ' + v)
+    });
+
+    subject.next(1);
+    subject.next(2);
+
+    subject.subscribe({
+      next: (v) => console.log('observerB: ' + v)
+    });
+
+    subject.next(3);
+
   }
 
-  static subscribe() {
+  static initReplaySubject() {
+    console.log('----------------------------');
+    const subject = new ReplaySubject(3);
 
-    this.multicasted$.subscribe(
-      {
-        next: x => console.log('observer A got value ' + x),
-        error: err => console.error('something wrong occurred: ' + err),
-        complete: () => console.log('done'),
-      }
-    );
+    subject.subscribe({
+      next: (v) => console.log('observerA: ' + v)
+    });
 
-    this.multicasted$.subscribe(
-      {
-        next: x => console.log('observer B got value ' + x),
-        error: err => console.error('something wrong occurred: ' + err),
-        complete: () => console.log('done'),
-      }
-    );
+    subject.next(1);
+    subject.next(2);
+    subject.next(3);
+    subject.next(4);
 
-    this.multicasted$.connect();
+    subject.subscribe({
+      next: (v) => console.log('observerB: ' + v)
+    });
+
+    subject.next(5);
+
+  }
+
+  static initAsyncSubject() {
+    console.log('----------------------------');
+    const subject = new AsyncSubject();
+
+    subject.subscribe({
+      next: (v) => console.log('observerA: ' + v)
+    });
+
+    subject.next(1);
+    subject.next(2);
+    subject.next(3);
+    subject.next(4);
+
+    subject.subscribe({
+      next: (v) => console.log('observerB: ' + v)
+    });
+
+    subject.next(5);
+    subject.complete();
+
   }
 
 }

@@ -2,7 +2,8 @@ import { MyObservable } from 'my-observable';
 
 export class App {
   run() {
-    MyObservable.init();
-    MyObservable.subscribe();
+    MyObservable.initBehaviorSubject();
+    MyObservable.initReplaySubject();
+    MyObservable.initAsyncSubject();
   }
 }
