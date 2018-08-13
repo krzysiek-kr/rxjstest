@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
-import { DATA_1 } from 'data';
-import { map, filter } from 'rxjs/operators';
+import { DATA_1, getTranslations } from 'data';
+import { map, filter, flatMap } from 'rxjs/operators';
 
 export class MyObservable {
 
-  static observable$: Observable<number>;
+  static observable$: Observable<any>;
 
   constructor() {
   }
@@ -39,6 +39,13 @@ export class MyObservable {
     });
 
     this.observable$ = this.observable$.pipe(mapOperation, filterOperation);
+  }
+
+  static flatMapOperators() {
+    const flatMapOperation = flatMap<number, string>((value) => {
+      return getTranslations(value);
+    });
+    this.observable$ = this.observable$.pipe(flatMapOperation);
   }
 
   static subscribe() {

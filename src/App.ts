@@ -9,5 +9,8 @@ export class App {
     MyObservable.init();
     MyObservable.joinAllOperators();
     MyObservable.subscribe();
+    MyObservable.init();
+    MyObservable.flatMapOperators();
+    MyObservable.subscribe();
   }
 }
