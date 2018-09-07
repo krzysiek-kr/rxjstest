@@ -1,14 +1,10 @@
-import { Cached } from 'cache/cached';
-import { CachedObserver } from 'cache/cached-observer';
-import { Cold } from './hot_and_cold/cold';
+import { TestObservable } from 'test/TestObservable';
+
 export class App {
   run() {
-    console.log('Cache');
-    Cached.init();
-    const observer1 = new CachedObserver('A');
-    let observer2 = new CachedObserver('B');
-    observer2 = new CachedObserver('C');
-    console.log('Hot&Cold');
-    const cold = new Cold();
+    const test = new TestObservable();
+    test.test$.subscribe((value) => {
+      console.log(value);
+    });
   }
 }
