@@ -1,10 +1,20 @@
 import { MyObservable } from 'my-observable';
+import { Subscription } from 'rxjs';
 
 export class App {
   run() {
-    MyObservable.init1();
-    MyObservable.subscribe();
-    MyObservable.init2();
-    MyObservable.subscribe();
+    const observableClass = new MyObservable();
+    const subscription: Subscription = observableClass.observable$.subscribe({
+      next: (x) => {
+        console.log('got value ' + x);
+      },
+      error: (err) => {
+        console.error('something wrong occurred: ' + err);
+      },
+      complete: () => {
+        console.log('done');
+      },
+    });
+    subscription.unsubscribe();
   }
 }

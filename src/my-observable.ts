@@ -1,39 +1,14 @@
-import { Observable } from 'rxjs';
-import { DATA_1 } from 'data';
+import { Observable, Observer } from 'rxjs';
 
 export class MyObservable {
 
-  static observable$: Observable<number>;
+  observable$: Observable<number>;
 
   constructor() {
-  }
-
-  static init1() {
-    this.observable$ = new Observable<number>((observer) => {
-      for (let i = 0; i < DATA_1.length; i++) {
-        observer.next(DATA_1[i]);
-      }
+    this.observable$ = new Observable<number>((observer: Observer<number>) => {
+      observer.next(1);
       observer.complete();
     });
   }
 
-  static init2() {
-    this.observable$ = new Observable<number>((observer) => {
-      for (let i = 0; i < DATA_1.length; i++) {
-        observer.next(DATA_1[i]);
-      }
-      observer.error('Error message');
-      observer.complete();
-    });
-  }
-
-  static subscribe() {
-    this.observable$.subscribe(
-      {
-        next: x => console.log('got value ' + x),
-        error: err => console.error('something wrong occurred: ' + err),
-        complete: () => console.log('done'),
-      }
-    );
-  }
 }
