@@ -5,14 +5,14 @@ export class App {
   run() {
     const observableClass = new MyObservable();
     const subscription: Subscription = observableClass.observable$.subscribe({
-      next: (x) => {
-        console.log('got value ' + x);
+      next: (value) => {
+        console.log('value: ' + value);
       },
-      error: (err) => {
-        console.error('something wrong occurred: ' + err);
+      error: (error) => {
+        console.error('error: ' + error);
       },
       complete: () => {
-        console.log('done');
+        console.log('complete');
       },
     });
     subscription.unsubscribe();
