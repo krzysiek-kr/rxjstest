@@ -1,14 +1,10 @@
 import { Observable, combineLatest, forkJoin } from 'rxjs';
 
-export class MyObservable {
+export class MyObservable1 {
 
-  static observable1$: Observable<number>;
-  static observable2$: Observable<number>;
+  observable1$: Observable<number>;
 
   constructor() {
-  }
-
-  static init1() {
     this.observable1$ = new Observable<number>((observer) => {
       observer.next(1);
       observer.next(2);
@@ -20,7 +16,13 @@ export class MyObservable {
       }, 1000);
     });
   }
-  static init2() {
+}
+
+export class MyObservable2 {
+
+  observable2$: Observable<number>;
+
+  constructor() {
     this.observable2$ = new Observable<number>((observer) => {
       observer.next(10);
       observer.next(20);
@@ -34,26 +36,4 @@ export class MyObservable {
       }, 300);
     });
   }
-  static combine() {
-    const combined$ = combineLatest(this.observable1$, this.observable2$, (x, y) => x + y);
-    combined$.subscribe(
-      {
-        next: x => console.log('got value ' + x),
-        error: err => console.error('something wrong occurred: ' + err),
-        complete: () => console.log('done'),
-      }
-    );
-  }
-
-  static forkJoin() {
-    const forkJoined$ = forkJoin(this.observable1$, this.observable2$, (x, y) => x + y);
-    forkJoined$.subscribe(
-      {
-        next: x => console.log('got value ' + x),
-        error: err => console.error('something wrong occurred: ' + err),
-        complete: () => console.log('done'),
-      }
-    );
-  }
-
 }
