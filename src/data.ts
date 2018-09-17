@@ -6,7 +6,8 @@ export const TRANSLATIONS = {
   2: 'two',
   3: 'three',
   4: 'four',
-  5: 'five'
+  5: 'five',
+  6: 'six'
 };
 
 export function getTranslations(x): Observable<string> {
