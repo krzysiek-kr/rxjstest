@@ -1,5 +1,5 @@
 export const DATA_1 = [1, 2, 3, 4, 5];
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 export const TRANSLATIONS = {
   1: 'one',
@@ -12,4 +12,12 @@ export const TRANSLATIONS = {
 
 export function getTranslations(x): Observable<string> {
   return of(TRANSLATIONS[x]);
+}
+
+export function getTranslationsWithError(x): Observable<string> {
+  if (x === 4) {
+    return throwError('error');
+  } else {
+    return of(TRANSLATIONS[x]);
+  }
 }
